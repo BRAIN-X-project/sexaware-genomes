@@ -1,0 +1,19 @@
+# Large data products live on Zenodo, not git.
+*.fa
+*.fa.gz
+*.fasta
+*.fasta.gz
+*.bw
+*.bigWig
+*.bam
+*.bai
+*.wig
+*.wig.gz
+*.bedgraph
+*.bedgraph.gz
+*_genmap_index/
+umap/
+work/
+results/
+__pycache__/
+*.pyc

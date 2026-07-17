@@ -1,0 +1,13 @@
+name: sexaware-genmap
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - genmap>=1.3
+  - ucsc-bedgraphtobigwig
+  - ucsc-bigwiginfo
+  - pybigwig
+  - numpy
+  - pandas
+  - samtools

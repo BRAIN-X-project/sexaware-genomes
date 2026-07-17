@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use these sex-aware references or mappability tracks, please cite this repository and the methods below."
+title: "Sex-chromosome-complement informed reference genomes and mappability"
+authors:
+  - family-names: "Tximitxurri"
+    given-names: ""
+version: 0.1.0
+date-released: 2026-07-17
+license: MIT
+references:
+  - type: article
+    authors:
+      - family-names: Olney
+        given-names: Kimberly C.
+    title: "Reference genome and transcriptome informed by the sex chromosome complement of the sample increase ability to detect sex differences in gene expression from RNA-Seq data"
+    journal: "Biology of Sex Differences"
+    year: 2020
+    doi: 10.1186/s13293-020-00312-9
+  - type: article
+    title: "Best practices for improving alignment and variant calling on human sex chromosomes"
+    year: 2025
+    notes: "PMC12190741"
+  - type: article
+    authors:
+      - family-names: Karimzadeh
+        given-names: Mehran
+    title: "Umap and Bismap: quantifying genome and methylome mappability"
+    journal: "Nucleic Acids Research"
+    year: 2018
+    doi: 10.1093/nar/gky677
+  - type: article
+    authors:
+      - family-names: Pockrandt
+        given-names: Christopher
+    title: "GenMap: ultra-fast computation of genome mappability"
+    journal: "Bioinformatics"
+    year: 2020
+    doi: 10.1093/bioinformatics/btaa222
