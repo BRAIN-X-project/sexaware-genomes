@@ -12,17 +12,13 @@ cross-mapping and false-positive variants:
   repetitive, low mappability).
 - **Gametologs** — single-copy Y genes with retained X homology.
 
+Although these regions can be useful to mask for sex-specific aligments, 
+**it is not always recommended for masking** based on previous literature 
+(see `CITATION.cff` file).
+
 ## How to use
 Two ways, per the paper:
 1. **As downstream blacklists** (recommended default): keep the standard masked
    reference and simply *filter/flag* variants that fall in these BEDs.
 2. **As extra hard-masking**: pass `--extra-mask <bed>` to `mask_genome.py` to N
-   these regions in the FASTA too (more aggressive; you lose real signal there).
-
-## Populating this folder
-Exact coordinates are assembly-specific and are **not shipped pre-filled** to
-avoid propagating unverified intervals. Obtain them from:
-- the AJHG 2025 paper's supplementary region files (GRCh38 / T2T-CHM13v2), and
-- UCSC "Segmental Dups" / self-chain tracks for XTR and ampliconic extents.
-Place files named e.g. `GRCh38.XTR.bed`, `GRCh38.ampliconicY.bed`,
-`GRCh38.gametologs.bed`, then reference them with `--extra-mask`.
+   these regions in the FASTA too. This step is more aggressive, as you may lose real signal there.

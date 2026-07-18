@@ -41,7 +41,7 @@ The Y is from HG002; PARs are larger and X/Y sizes differ slightly. Source:
 CHM13v2.0 official PAR coordinate file (marbl/CHM13; T2T-Y paper,
 biorxiv 2022.12.01.518724).
 
-## Mouse — ⚠️ CAVEAT-HEAVY, gated by default
+## Mouse — ⚠️ WARNING
 
 The mouse PAR is a single ~700–960 kb block at the **distal (q-terminal)** end of
 chrX/chrY, is **mostly unassembled repetitive sequence**, and the
@@ -63,11 +63,11 @@ Sources: Morgan & Pardo-Manuel de Villena, *Genetics* 2019 ("Instability of the
 Pseudoautosomal Boundary in House Mice", 10.1534/genetics.119.302232;
 PMC6553833); GRCm38.p5 annotation.
 
-### GRCm39 / mm39 — DERIVED ESTIMATE (unverified)
+### GRCm39 / mm39 — DERIVED ESTIMATE from LiftOvering the starting chromosome
 | region | contig | start | end |
 |--------|--------|-------|-----|
-| PAR | chrX | 168415052 | 169376592 |
-| PAR | chrY | 90457114 | 91355967 |
+| PAR | chrX | 168752755 | 169376592 |  
+| PAR | chrY | 90757114 | 91355967 |
 
 **Not from a primary source.** GRCm39 retiled the PAR (adding *Sts*, *Nlgn4l*,
 *Akap17a*, *2510022D24Rik*) so mm10 numbers do not transfer directly. These
