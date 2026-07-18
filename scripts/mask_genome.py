@@ -33,7 +33,7 @@ Outputs (under --outdir):
   <prefix>.<XX|XY>.chrom.sizes  two-column contig sizes
   <prefix>.<XX|XY>.masked.bed   every interval that was set to N
   <prefix>.<XX|XY>.metadata.json provenance + parameters
-  <prefix>.<XX|XY>.fa.md5       checksum for Zenodo verification
+  <prefix>.<XX|XY>.fa.md5       checksum for verification
 """
 from __future__ import annotations
 

@@ -4,4 +4,3 @@ COPY environment.genmap.yml /tmp/environment.genmap.yml
 RUN micromamba install -y -n base -f /tmp/environment.genmap.yml && micromamba clean -a -y
 ENV PATH=/opt/conda/bin:$PATH
 WORKDIR /work
-# Umap legacy (py2.7) lives in a separate image; see environment.umap_legacy.yml.
