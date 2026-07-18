@@ -1,0 +1,27 @@
+# Per-source download URLs for each assembly. download_references.sh picks the
+# first source in --preferred-source (default: ensembl,ucsc,ncbi) that has a row
+# here for the requested assembly (graceful fallback).
+#
+# Contig naming after download is normalised transparently by mask_genome.py
+# (Ensembl 1/X/Y, UCSC chr1/chrX/chrY, NCBI accessions renamed to chrN), so any
+# source works with the same PAR BEDs.
+#
+# Columns (tab-separated):
+#   assembly       Assembly key (matches config/assemblies.tsv)
+#   source         ensembl | ucsc | ncbi
+#   needs_rename   1 if contigs are accessions to remap to chrN (NCBI), else 0
+#   url            FASTA download URL
+assembly	source	needs_rename	url
+GRCh38	ensembl	0	https://ftp.ensembl.org/pub/current_fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+GRCh38	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
+GRCh38	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz
+GRCh37	ensembl	0	https://ftp.ensembl.org/pub/grch37/current/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.dna.primary_assembly.fa.gz
+GRCh37	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz
+GRCh37	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.25_GRCh37.p13/GCF_000001405.25_GRCh37.p13_genomic.fna.gz
+T2T-CHM13v2	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/009/914/755/GCF_009914755.1_T2T-CHM13v2.0/GCF_009914755.1_T2T-CHM13v2.0_genomic.fna.gz
+T2T-CHM13v2	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/hs1/bigZips/hs1.fa.gz
+GRCm39	ensembl	0	https://ftp.ensembl.org/pub/current_fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna.primary_assembly.fa.gz
+GRCm39	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/mm39/bigZips/mm39.fa.gz
+GRCm39	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/635/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.fna.gz
+GRCm38	ensembl	0	https://ftp.ensembl.org/pub/release-102/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz
+GRCm38	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/mm10/bigZips/mm10.fa.gz

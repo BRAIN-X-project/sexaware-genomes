@@ -1,0 +1,16 @@
+# Registry of supported assemblies.
+# Columns (tab-separated):
+#   assembly        Canonical key used with mask_genome.py --assembly
+#   organism        homo_sapiens | mus_musculus
+#   chr_style       ucsc (chr1,chrX,chrY) | ensembl (1,X,Y)
+#   par_bed         Path (relative to repo root) to the PAR BED, or NA
+#   par_status      verified | approximate  (approximate -> XY masking is gated)
+#   y_contig        Name of the Y contig in the source FASTA
+#   x_contig        Name of the X contig in the source FASTA
+#   fasta_url       Primary download URL for the source FASTA (may be edited)
+assembly	organism	chr_style	par_bed	par_status	y_contig	x_contig	fasta_url
+GRCh38	homo_sapiens	ucsc	config/par/GRCh38.PAR.bed	verified	chrY	chrX	https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
+GRCh37	homo_sapiens	ucsc	config/par/GRCh37.PAR.bed	verified	chrY	chrX	https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz
+T2T-CHM13v2	homo_sapiens	ucsc	config/par/T2T-CHM13v2.PAR.bed	verified	chrY	chrX	https://hgdownload.soe.ucsc.edu/hubs/GCA/009/914/755/GCA_009914755.4/GCA_009914755.4.fa.gz
+GRCm39	mus_musculus	ucsc	config/par/GRCm39.PAR.APPROXIMATE.bed	approximate	chrY	chrX	https://hgdownload.soe.ucsc.edu/goldenPath/mm39/bigZips/mm39.fa.gz
+GRCm38	mus_musculus	ucsc	config/par/GRCm38.PAR.APPROXIMATE.bed	approximate	chrY	chrX	https://hgdownload.soe.ucsc.edu/goldenPath/mm10/bigZips/mm10.fa.gz

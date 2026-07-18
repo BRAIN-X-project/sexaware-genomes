@@ -41,16 +41,35 @@ envs/                          conda envs + Dockerfile (GenMap default; Umap leg
 ```
 ★ = the two scripts most users need.
 
+## Genome sources
+Download provider is chosen by preference with graceful fallback, via
+`--preferred-source` (default `ensembl,ucsc,ncbi`); URLs live in
+`config/sources.tsv`. The first listed source that has the assembly wins.
+
+| source | naming | notes |
+|--------|--------|-------|
+| ensembl | `1/X/Y` | `primary_assembly`; **already hard-masks the chrY PAR with Ns** (XY step is then idempotent; XX still masks all of Y) |
+| ucsc | `chr1/chrX/chrY` | soft-masked bigZips; T2T is `hs1` |
+| ncbi | RefSeq accessions → renamed to `chrN` | primary source for T2T-CHM13v2 |
+
+Contig naming is normalised by `mask_genome.py`, so the same PAR BEDs work
+whatever source you pick. `download_references.sh` prints the exact FASTA path to
+feed to `mask_genome.py`.
+
 ## Quick start (GRCh38, both flavours)
 ```bash
 conda env create -f envs/environment.genmap.yml && conda activate sexaware-genmap
 
-# 1. get the source genome (+ human territory tables/blacklist)
+# 1. get the source genome (Ensembl by default; +human territory tables/blacklist)
 scripts/download_references.sh -a GRCh38 -o data/GRCh38
+#   ...or force a provider:
+#   scripts/download_references.sh -a GRCh38 -o data/GRCh38 --preferred-source ucsc,ensembl
 
 # 2. build BOTH SCC references (XX: whole-Y masked, XY: Y-PAR masked)
+#    use the FASTA path that step 1 printed ("==> feed this FASTA ...")
 python scripts/mask_genome.py --assembly GRCh38 \
-  --fasta data/GRCh38/hg38.fa.gz --complement both --outdir refs/GRCh38 --gzip
+  --fasta data/GRCh38/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz \
+  --complement both --outdir refs/GRCh38 --gzip
 
 # 3. mappability (single + multi-read) for every k, per flavour
 for c in XX XY; do
@@ -64,6 +83,17 @@ python scripts/build_callable_beds.py \
   --threshold 1.0 --out callable/GRCh38.XY.k100.callable.bed
 python scripts/make_ploidy_configs.py --par-bed config/par/GRCh38.PAR.bed \
   --chrom-sizes refs/GRCh38/GRCh38.XY.chrom.sizes --label GRCh38 --outdir config/ploidy
+
+# 5. (optional) territory tables — feed OUR sex-aware k100 multi_read bigWig,
+#    NOT UCSC's precomputed track (that one is built on the UNMASKED genome and
+#    would report mappability inside the PAR).
+python scripts/build_territory_tables.py \
+  --chrom-info data/GRCh38/chromInfo.txt.gz --gap data/GRCh38/gap.txt.gz \
+  --cytoband data/GRCh38/cytoBand.txt.gz --blacklist data/GRCh38/ENCFF356LFX.hg38.blacklist.bed.gz \
+  --umap-k100-bw map/GRCh38/GRCh38.XY/k100/GRCh38.XY.k100.multi_read.bw \
+  --xy-regions your_xy_regions.GRCh38.txt --out-prefix territory/GRCh38.XY
+#   (xy_regions = your X/Y partition file: PAR1X/NPX/PAR2X/XAR/XCR/XTR/... ,
+#    the same one your original 2A workflow used; not shipped in this repo.)
 ```
 
 ## Custom genome (e.g. T2T mouse or a strain assembly)
