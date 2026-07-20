@@ -1,0 +1,15 @@
+# XTR regions are defined from here (https://genome.cshlp.org/content/7/4/307),
+# asthe sequence beginning at the start of DXS1217 [89140845] and ending at the end of DXS3 [93328068]
+# Coordinates retrieved from ensembl:
+# DXS1217: https://useast.ensembl.org/Homo_sapiens/Marker/Details?m=sWXD902
+# DXS3: https://useast.ensembl.org/Homo_sapiens/Marker/Details?m=sWXD298
+chrom	region	region_group	start	end
+X	PAR1X	PAR1X	1	2781479
+X	XAR	NPX	2781480	46880000
+X	XCR	NPX	46880001	89140844
+X	XTR	NPX	89140845	93328068
+X	XCR	NPX	93328069	155701382
+X	PAR2X	PAR2X	155701383	156040895
+Y	PAR1Y	PAR1Y	1	2781479
+Y	NPY	NPY	2781480	56887902
+Y	PAR2Y	PAR2Y	56887903	57227415

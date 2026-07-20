@@ -61,7 +61,7 @@ feed to `mask_genome.py`.
 conda env create -f envs/environment.genmap.yml && conda activate sexaware-genmap
 
 # 1. get the source genome (Ensembl by default; +human territory tables/blacklist)
-scripts/download_references.sh -a GRCh38 -o data/GRCh38
+scripts/download_references.sh -a GRCh38 -o data/GRCh38 --preferred-source ucsc,ensembl
 #   ...or force a provider:
 #   scripts/download_references.sh -a GRCh38 -o data/GRCh38 --preferred-source ucsc,ensembl
 
@@ -91,9 +91,7 @@ python scripts/build_territory_tables.py \
   --chrom-info data/GRCh38/chromInfo.txt.gz --gap data/GRCh38/gap.txt.gz \
   --cytoband data/GRCh38/cytoBand.txt.gz --blacklist data/GRCh38/ENCFF356LFX.hg38.blacklist.bed.gz \
   --umap-k100-bw map/GRCh38/GRCh38.XY/k100/GRCh38.XY.k100.multi_read.bw \
-  --xy-regions your_xy_regions.GRCh38.txt --out-prefix territory/GRCh38.XY
-#   (xy_regions = your X/Y partition file: PAR1X/NPX/PAR2X/XAR/XCR/XTR/... ,
-#    the same one your original 2A workflow used; not shipped in this repo.)
+  --out-prefix territory/GRCh38.XY
 ```
 
 ## Custom genome (e.g. T2T mouse or a strain assembly)
@@ -128,11 +126,18 @@ bowtie2, STAR, salmon, kallisto and minimap2:
 [`docs/aligner_indexes.md`](docs/aligner_indexes.md).
 
 ## Releasing to Zenodo
-Track only code + light BEDs in git (`.gitignore` excludes big binaries). For a
-release: build all references + tracks, then upload the FASTAs, bigWigs and their
-`*.md5` to a Zenodo record and link its DOI here. Keep one Zenodo record per
-organism to stay under size limits.
+You can access the genomes and mappability BigWig files at the following Zenodo
+repositories: `10.5281/zenodo.21442232` (genome files) and `10.5281/zenodo.21461060` (mappability files).
+For each resource, the following genomes were included:
+* GRCh38 (ensembl)
+* GRCh37 (ensembl)
+* T2T-CHM13v2 (ucsc)
+* GRCm39 (ensembl)
+* GRCm38 (ensembl)
+
+The mappability files were generated with the following `k` values: 24, 36, 50, 100, 150.
+
 
 ## Citation
-See [`CITATION.cff`](CITATION.cff). Please also cite Olney 2020, the AJHG 2025
+See [`CITATION.cff`](CITATION.cff) to cite the Zenodo repository. Please also cite Olney 2020, the AJHG 2025
 best-practices paper, and Umap/GenMap as appropriate.

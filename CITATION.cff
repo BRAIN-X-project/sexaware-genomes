@@ -8,6 +8,14 @@ version: 0.1.0
 date-released: 2026-07-17
 license: MIT
 references:
+  - type: resource
+    authors:
+      - family-names: Ascensión
+        given-names: Alex M.
+    title: "Sex-aware genomic resources"
+    journal: "Zenodo"
+    year: 2026
+    doi: 10.5281/zenodo.21442232
   - type: article
     authors:
       - family-names: Olney
