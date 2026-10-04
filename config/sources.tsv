@@ -6,22 +6,29 @@
 # (Ensembl 1/X/Y, UCSC chr1/chrX/chrY, NCBI accessions renamed to chrN), so any
 # source works with the same PAR BEDs.
 #
+# Ensembl URLs are PINNED to an explicit release-NNN rather than the floating
+# current_fasta/ symlink, so a published reference records the exact release it
+# came from and can be rebuilt byte-for-byte. Keep these in step with the
+# matching GTF rows in config/annotations.tsv: an assembly label like "GRCh38"
+# is stable across releases, the sequence is not guaranteed to be.
+#
 # Columns (tab-separated):
 #   assembly       Assembly key (matches config/assemblies.tsv)
 #   source         ensembl | ucsc | ncbi
 #   needs_rename   1 if contigs are accessions to remap to chrN (NCBI), else 0
 #   url            FASTA download URL
-assembly	source	needs_rename	url
-GRCh38	ensembl	0	https://ftp.ensembl.org/pub/current_fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
-GRCh38	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
-GRCh38	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz
-GRCh37	ensembl	0	https://ftp.ensembl.org/pub/grch37/current/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.dna.primary_assembly.fa.gz
-GRCh37	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz
-GRCh37	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.25_GRCh37.p13/GCF_000001405.25_GRCh37.p13_genomic.fna.gz
-T2T-CHM13v2	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/009/914/755/GCF_009914755.1_T2T-CHM13v2.0/GCF_009914755.1_T2T-CHM13v2.0_genomic.fna.gz
-T2T-CHM13v2	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/hs1/bigZips/hs1.fa.gz
-GRCm39	ensembl	0	https://ftp.ensembl.org/pub/current_fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna.primary_assembly.fa.gz
-GRCm39	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/mm39/bigZips/mm39.fa.gz
-GRCm39	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/635/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.fna.gz
-GRCm38	ensembl	0	https://ftp.ensembl.org/pub/release-102/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz
-GRCm38	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/mm10/bigZips/mm10.fa.gz
+#   release        provider release/version this URL pins (NA when not versioned)
+assembly	source	needs_rename	url	release
+GRCh38	ensembl	0	https://ftp.ensembl.org/pub/release-116/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz	116
+GRCh38	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz	hg38
+GRCh38	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz	GCF_000001405.40
+GRCh37	ensembl	0	https://ftp.ensembl.org/pub/grch37/current/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.dna.primary_assembly.fa.gz	87
+GRCh37	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz	hg19
+GRCh37	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.25_GRCh37.p13/GCF_000001405.25_GRCh37.p13_genomic.fna.gz	GCF_000001405.25
+T2T-CHM13v2	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/009/914/755/GCF_009914755.1_T2T-CHM13v2.0/GCF_009914755.1_T2T-CHM13v2.0_genomic.fna.gz	GCF_009914755.1
+T2T-CHM13v2	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/hs1/bigZips/hs1.fa.gz	hs1
+GRCm39	ensembl	0	https://ftp.ensembl.org/pub/release-116/fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna.primary_assembly.fa.gz	116
+GRCm39	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/mm39/bigZips/mm39.fa.gz	mm39
+GRCm39	ncbi	1	https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/635/GCF_000001635.27_GRCm39/GCF_000001635.27_GRCm39_genomic.fna.gz	GCF_000001635.27
+GRCm38	ensembl	0	https://ftp.ensembl.org/pub/release-102/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz	102
+GRCm38	ucsc	0	https://hgdownload.soe.ucsc.edu/goldenPath/mm10/bigZips/mm10.fa.gz	mm10

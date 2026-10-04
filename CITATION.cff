@@ -2,20 +2,45 @@ cff-version: 1.2.0
 message: "If you use these sex-aware references or mappability tracks, please cite this repository and the methods below."
 title: "Sex-chromosome-complement informed reference genomes and mappability"
 authors:
-  - family-names: "Alex M. Ascensión"
-    given-names: ""
-version: 0.1.0
-date-released: 2026-07-17
+  - family-names: "Ascensión"
+    given-names: "Alex M."
+version: 0.2.0
+date-released: 2026-10-03
 license: MIT
+repository-code: "https://github.com/alexmascension/sexaware-genomes"
+url: "https://doi.org/10.5281/zenodo.21442231"
+keywords:
+  - sex chromosome complement
+  - reference genome
+  - pseudoautosomal region
+  - mappability
+  - genome annotation
+# Concept DOIs, which always resolve to the newest version. Pinning a version
+# DOI here would orphan the citation the moment a new version is released.
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.21442231
+    description: "Sex-aware reference genomes and annotation (all versions)"
+  - type: doi
+    value: 10.5281/zenodo.21461059
+    description: "Sex-aware mappability tracks (all versions)"
 references:
   - type: resource
     authors:
       - family-names: Ascensión
         given-names: Alex M.
-    title: "Sex-aware genomic resources"
+    title: "Sex-aware reference genomes and annotation"
     journal: "Zenodo"
     year: 2026
-    doi: 10.5281/zenodo.21442232
+    doi: 10.5281/zenodo.21442231
+  - type: resource
+    authors:
+      - family-names: Ascensión
+        given-names: Alex M.
+    title: "Sex-aware mappability tracks"
+    journal: "Zenodo"
+    year: 2026
+    doi: 10.5281/zenodo.21461059
   - type: article
     authors:
       - family-names: Olney
@@ -25,9 +50,27 @@ references:
     year: 2020
     doi: 10.1186/s13293-020-00312-9
   - type: article
+    authors:
+      - family-names: "Taravella Oill"
+        given-names: "Angela M."
     title: "Best practices for improving alignment and variant calling on human sex chromosomes"
+    journal: "The American Journal of Human Genetics"
+    volume: 113
+    issue: 4
+    start: 782
+    end: 793
+    year: 2026
+    doi: 10.1016/j.ajhg.2026.02.019
+    notes: "the source of the optional stricter masking (XTR / ampliconic Y / gametologs) in config/extra_mask/. Posted as bioRxiv 10.1101/2025.04.29.651297 (PMC12190741) before peer review; cite the journal version."
+  - type: database
+    authors:
+      - family-names: "Dyer"
+        given-names: "Sarah C."
+    title: "Ensembl 2025"
+    journal: "Nucleic Acids Research"
     year: 2025
-    notes: "PMC12190741"
+    doi: 10.1093/nar/gkae1071
+    notes: "source of all annotation (GTF) and of the Ensembl genome FASTAs"
   - type: article
     authors:
       - family-names: Karimzadeh

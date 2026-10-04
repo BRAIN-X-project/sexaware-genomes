@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 # Optional: reproduce classic Umap (Hoffman lab) mappability for continuity with
-# UCSC/ENCODE tracks. Legacy Umap needs Python 2.7 + bowtie1 (see
-# envs/environment.umap_legacy.yml). GenMap (run_mappability.sh) is the default;
-# use this only when you must match pre-existing Umap bigWigs exactly.
+# UCSC/ENCODE tracks. GenMap (run_mappability.sh) is the default; use this only
+# when you must match pre-existing Umap bigWigs exactly.
+#
+# The repo ships no environment file for this: legacy Umap needs Python 2.7, which
+# no longer coexists with the rest of the toolchain, so it lives in its own
+# environment that you pass via -p. It was dropped from envs/ deliberately (commit
+# 90bb015) -- recreate it with:
+#
+#   micromamba create -n umap_legacy -c conda-forge -c bioconda \
+#     python=2.7 bowtie samtools ucsc-bedgraphtobigwig ucsc-wigtobigwig numpy pandas
+#   git clone https://github.com/hoffmangroup/umap && (cd umap && git checkout 1.2.1)
 #
 # This is a parameterised, path-free rewrite of the original 1B_run_umap_command.sh.
 set -euo pipefail

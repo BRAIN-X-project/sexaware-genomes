@@ -8,8 +8,14 @@
 #
 # Contig naming is normalised downstream by mask_genome.py, so any source works
 # with the same PAR BEDs:
-#   * Ensembl -> 1/X/Y            (Ensembl already hard-masks the chrY PAR with Ns;
-#                                   the XY step is then idempotent. XX still masks Y.)
+#   * Ensembl -> 1/X/Y            (whether the chrY PAR already carries Ns is
+#                                   ASSEMBLY-SPECIFIC, measured by sampling the
+#                                   primary_assembly FASTAs: GRCh38 has real
+#                                   ACGT there, GRCh37 is all-N, and the mouse
+#                                   derived PAR is ~84% N. So the XY masking
+#                                   step does real work on some assemblies and
+#                                   is a no-op on others -- never skip it on the
+#                                   assumption that upstream already did it.)
 #   * UCSC    -> chr1/chrX/chrY
 #   * NCBI    -> RefSeq accessions, renamed here to chrN via the assembly_report.
 #

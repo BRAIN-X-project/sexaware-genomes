@@ -34,6 +34,12 @@ Outputs (under --outdir):
   <prefix>.<XX|XY>.masked.bed   every interval that was set to N
   <prefix>.<XX|XY>.metadata.json provenance + parameters
   <prefix>.<XX|XY>.fa.md5       checksum for verification
+
+The .fa.md5 sidecar carries the md5 of the file AS DISTRIBUTED (the .fa.gz
+bytes), so `md5sum -c <prefix>.<XX|XY>.fa.md5` works on a plain download. Gzip
+output is byte-reproducible (mtime=0), so rebuilding from the same source FASTA
+reproduces the same digest. The metadata JSON additionally records
+`output_fasta_uncompressed_md5` for comparing content across providers.
 """
 from __future__ import annotations
 
@@ -43,11 +49,13 @@ import gzip
 import hashlib
 import io
 import json
+import subprocess
 import sys
 import time
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+TOOL_VERSION = "0.2.0"
 
 # --------------------------------------------------------------------------- #
 # verbose logging (timestamped, to stderr; silence with --quiet)
@@ -63,6 +71,16 @@ def log(msg: str) -> None:
               file=sys.stderr, flush=True)
 
 
+def git_describe() -> str:
+    """Short git revision of the repo, or 'unknown' outside a checkout."""
+    try:
+        out = subprocess.run(["git", "-C", str(REPO_ROOT), "rev-parse", "--short", "HEAD"],
+                             capture_output=True, text=True, timeout=10, check=True)
+        return out.stdout.strip() or "unknown"
+    except Exception:
+        return "unknown"
+
+
 # --------------------------------------------------------------------------- #
 # I/O helpers
 # --------------------------------------------------------------------------- #
@@ -74,9 +92,21 @@ def open_maybe_gzip_text(path: Path):
 
 
 def open_out_text(path: Path):
-    """Open a plain or gzip-compressed output for text writes."""
+    """Open a plain or gzip-compressed output for text writes.
+
+    Gzip output is written DETERMINISTICALLY: `gzip.open(path, "wb")` stamps the
+    current mtime and the source filename into the gzip header, so two runs over
+    identical inputs would produce different bytes and the published .fa.gz md5
+    could never be reproduced by anyone rebuilding the reference. Pinning
+    mtime=0 with an empty embedded filename makes the md5 a real identity.
+    """
     if str(path).endswith(".gz"):
-        return io.TextIOWrapper(gzip.open(path, "wb"), encoding="ascii", newline="")
+        raw = open(path, "wb")
+        handle = gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0)
+        # Hand ownership of the backing file to the GzipFile, so closing the
+        # text wrapper closes everything (same mechanism gzip.open itself uses).
+        handle.myfileobj = raw
+        return io.TextIOWrapper(handle, encoding="ascii", newline="")
     return open(path, "w", encoding="ascii", newline="")
 
 
@@ -125,6 +155,20 @@ def contig_matches(fasta_name: str, target: str) -> bool:
     return strip_chr(fasta_name) == strip_chr(target)
 
 
+def is_y_side(chrom: str, y_contig: str) -> bool:
+    """True if a PAR/mask BED row belongs to the Y side of the X/Y pair.
+
+    A row is Y-side if its canonical label is 'Y' (how config/par/*.bed names
+    them) or if it already matches the real Y contig of this assembly, which may
+    be chrY, Y or an accession (e.g. NCBI T2T NC_060948.1).
+
+    This is the single definition of "Y side" in the repo: make_sexaware_gtf.py
+    imports it so the annotation filter and the FASTA masker can never disagree
+    about which intervals live on the Y.
+    """
+    return strip_chr(chrom).upper() == "Y" or contig_matches(chrom, y_contig)
+
+
 # --------------------------------------------------------------------------- #
 # masking core
 # --------------------------------------------------------------------------- #
@@ -156,7 +200,7 @@ def build_mask_plan(
         # T2T NC_060948.1). A PAR row is Y-side if its canonical BED label is
         # 'Y', or if it already matches the real y_contig name.
         for chrom, start, end, name in par_intervals:
-            if strip_chr(chrom).upper() == "Y" or contig_matches(chrom, y_contig):
+            if is_y_side(chrom, y_contig):
                 add(strip_chr(y_contig), start, end, f"{name}_masked")
     else:
         raise ValueError("complement must be 'XX' or 'XY'")
@@ -278,6 +322,27 @@ def write_masked_bed(path: Path, applied: list) -> None:
 
 
 def md5_of_file(path: Path, chunk: int = 1 << 20) -> str:
+    """md5 of the bytes of `path` AS DISTRIBUTED -- never decompressed.
+
+    This is what `md5sum <file>` reports on the file a user actually downloads,
+    so it is what the .fa.md5 sidecar (which names the .fa.gz) must carry.
+    Hashing the decompressed stream of a .gz instead yields a digest that NO
+    downloader can reproduce, making `md5sum -c` look like a corrupt download.
+    """
+    digest = hashlib.md5()
+    with open(path, "rb") as handle:
+        for block in iter(lambda: handle.read(chunk), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def md5_of_content(path: Path, chunk: int = 1 << 20) -> str:
+    """md5 of the DECOMPRESSED content of `path` (sequence identity, not bytes).
+
+    Lets you tell whether a .fa and a .fa.gz, or two files compressed at
+    different levels, hold the same genome. Recorded in the metadata JSON only;
+    deliberately NOT what the .fa.md5 sidecar carries.
+    """
     digest = hashlib.md5()
     opener = gzip.open if str(path).endswith(".gz") else open
     with opener(path, "rb") as handle:
@@ -411,11 +476,15 @@ def main() -> None:
         log(f"  wrote {out_sizes.name} ({len(lengths)} contigs)")
         write_masked_bed(out_bed, applied)
         log(f"  wrote {out_bed.name} ({len(applied)} masked interval(s))")
-        log("  computing md5 checksum ...")
+        log("  computing md5 checksums ...")
         checksum = md5_of_file(out_fasta)
+        content_md5 = md5_of_content(out_fasta)
         out_md5.write_text(f"{checksum}  {out_fasta.name}\n")
 
         metadata = {
+            "tool": "mask_genome.py",
+            "tool_version": TOOL_VERSION,
+            "repo_revision": git_describe(),
             "assembly": args.assembly,
             "complement": complement,
             "source_fasta": str(fasta_path),
@@ -427,7 +496,9 @@ def main() -> None:
             "n_masked_intervals": len(applied),
             "masked_bp": sum(end - start for _c, start, end, _n in applied),
             "output_fasta": out_fasta.name,
+            "output_fasta_bytes": out_fasta.stat().st_size,
             "output_fasta_md5": checksum,
+            "output_fasta_uncompressed_md5": content_md5,
             "method": (
                 "XX: whole-Y hard-mask. XY: Y-PAR hard-mask (X intact). "
                 "Standard follows Olney 2020 & AJHG 2025 best practices."

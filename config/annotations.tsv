@@ -1,0 +1,49 @@
+# Per-release annotation (GTF) sources, one row per (assembly, source, release,
+# flavour). Consumed by scripts/download_annotations.sh and, for provenance, by
+# scripts/make_sexaware_gtf.py.
+#
+# This is a SEPARATE file from config/sources.tsv on purpose: that one is keyed
+# (assembly, source) and download_references.sh looks a row up with
+# `awk '$1==a && $2==s {print $4}'`. Adding GTF rows there would make that
+# predicate match several lines, so URL would become a multi-line string and the
+# wget would fail confusingly.
+#
+# Release choice: the current release, plus the 1-2 older ones the ecosystem is
+# actually pinned to (GENCODE / Cell Ranger vintages). Keep the FASTA rows in
+# config/sources.tsv in step with these -- an assembly label is stable across
+# releases, the sequence and the contig set are not.
+#
+# Flavour. We ship `primary`, the file that matches dna.primary_assembly:
+#   primary  <Species>.<ASM>.<REL>.gtf.gz          chromosomes + scaffolds
+#   chr      <Species>.<ASM>.<REL>.chr.gtf.gz      chromosomes only
+# NEVER chr_patch_hapl_scaff (adds patches/haplotypes that are absent from
+# primary_assembly) and NEVER abinitio (ab-initio predictions, not the genebuild).
+# download_annotations.sh refuses those two patterns whatever this file says.
+#
+# Columns (tab-separated):
+#   assembly            Assembly key (matches config/assemblies.tsv)
+#   source              Annotation provider (ensembl)
+#   release             Provider release number
+#   flavour             primary | chr
+#   is_latest           1 for the newest release shipped for this assembly
+#   restrict_to_genome  1 if this GTF annotates contigs absent from the
+#                       primary_assembly FASTA, so make_sexaware_gtf.py must
+#                       drop them instead of failing. Verify before setting it.
+#   url                 GTF download URL
+#   checksums_url       Ensembl CHECKSUMS for that directory (BSD `sum` format)
+#   notes               why this release is shipped
+assembly	source	release	flavour	is_latest	restrict_to_genome	url	checksums_url	notes
+GRCh38	ensembl	116	primary	1	0	https://ftp.ensembl.org/pub/release-116/gtf/homo_sapiens/Homo_sapiens.GRCh38.116.gtf.gz	https://ftp.ensembl.org/pub/release-116/gtf/homo_sapiens/CHECKSUMS	current Ensembl release; pairs with the release-116 FASTA
+GRCh38	ensembl	110	primary	0	0	https://ftp.ensembl.org/pub/release-110/gtf/homo_sapiens/Homo_sapiens.GRCh38.110.gtf.gz	https://ftp.ensembl.org/pub/release-110/gtf/homo_sapiens/CHECKSUMS	equivalent genebuild to GENCODE v44 / Cell Ranger 2024-A
+GRCh38	ensembl	98	primary	0	0	https://ftp.ensembl.org/pub/release-98/gtf/homo_sapiens/Homo_sapiens.GRCh38.98.gtf.gz	https://ftp.ensembl.org/pub/release-98/gtf/homo_sapiens/CHECKSUMS	equivalent genebuild to GENCODE v32 / Cell Ranger 2020-A
+GRCh37	ensembl	87	primary	1	0	https://ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf.gz	https://ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/CHECKSUMS	final GRCh37 genebuild; the frozen pub/grch37 branch
+GRCh37	ensembl	75	primary	0	1	https://ftp.ensembl.org/pub/release-75/gtf/homo_sapiens/Homo_sapiens.GRCh37.75.gtf.gz	https://ftp.ensembl.org/pub/release-75/gtf/homo_sapiens/CHECKSUMS	classic GENCODE v19-era pin. Release 75 predates Ensembl splitting the GTF into flavours: this single file is patch-inclusive (8.5% of features sit on 204 HG*_PATCH / haplotype / LRG contigs absent from primary_assembly), hence restrict_to_genome=1. Also the build where X and Y PAR copies SHARE a gene_id.
+GRCm39	ensembl	116	primary	1	0	https://ftp.ensembl.org/pub/release-116/gtf/mus_musculus/Mus_musculus.GRCm39.116.gtf.gz	https://ftp.ensembl.org/pub/release-116/gtf/mus_musculus/CHECKSUMS	current Ensembl release; pairs with the release-116 FASTA
+GRCm39	ensembl	110	primary	0	0	https://ftp.ensembl.org/pub/release-110/gtf/mus_musculus/Mus_musculus.GRCm39.110.gtf.gz	https://ftp.ensembl.org/pub/release-110/gtf/mus_musculus/CHECKSUMS	widely pinned GRCm39 genebuild
+GRCm38	ensembl	102	primary	1	0	https://ftp.ensembl.org/pub/release-102/gtf/mus_musculus/Mus_musculus.GRCm38.102.gtf.gz	https://ftp.ensembl.org/pub/release-102/gtf/mus_musculus/CHECKSUMS	last Ensembl release carrying GRCm38; pairs with the release-102 FASTA
+GRCm38	ensembl	98	primary	0	0	https://ftp.ensembl.org/pub/release-98/gtf/mus_musculus/Mus_musculus.GRCm38.98.gtf.gz	https://ftp.ensembl.org/pub/release-98/gtf/mus_musculus/CHECKSUMS	equivalent genebuild to GENCODE vM23 / Cell Ranger mm10-2020-A
+#
+# T2T-CHM13v2 deliberately has NO row: Ensembl's main branch does not annotate
+# it, and this repo ships Ensembl annotation only. Users who need T2T annotation
+# should take RefSeq GCF_009914755.1 and run make_sexaware_gtf.py on it in
+# custom mode (--par-bed config/par/T2T-CHM13v2.PAR.bed). See docs/methods.md.

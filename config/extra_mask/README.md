@@ -1,8 +1,11 @@
 # Extra (best-practices) masking BEDs
 
 These OPTIONAL BEDs implement the stricter masking from *"Best practices for
-improving alignment and variant calling on human sex chromosomes"* (PMC12190741,
-AJHG 2025), beyond the standard Olney-2020 PAR masking.
+improving alignment and variant calling on human sex chromosomes"* (Taravella Oill
+et al. 2026, *Am J Hum Genet* 113:782-793, `10.1016/j.ajhg.2026.02.019` — the
+peer-reviewed version of the bioRxiv preprint [PMC12190741](https://pmc.ncbi.nlm.nih.gov/articles/PMC12190741/)
+this repo used to cite as "AJHG 2025"), beyond the standard Olney-2020 PAR
+masking.
 
 They target regions of **high but not perfect** X–Y homology that still cause
 cross-mapping and false-positive variants:

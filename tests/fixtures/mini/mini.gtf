@@ -1,0 +1,45 @@
+#!genome-build MINIv1
+#!genome-version MINIv1
+#!genome-date 2026-01-01
+#!genome-build-accession GCA_000000000.1
+#!genebuild-last-updated 2026-01
+1	mini	gene	1000	2000	.	+	.	gene_id "ENSG_AUTO1"; gene_version "1"; gene_name "AUTO1"; gene_source "mini"; gene_biotype "protein_coding";
+1	mini	transcript	1000	2000	.	+	.	gene_id "ENSG_AUTO1"; gene_version "1"; gene_name "AUTO1"; transcript_id "ENST_AUTO1"; transcript_version "1"; gene_source "mini"; gene_biotype "protein_coding";
+1	mini	exon	1000	1400	.	+	.	gene_id "ENSG_AUTO1"; gene_version "1"; gene_name "AUTO1"; transcript_id "ENST_AUTO1"; exon_number "1"; exon_id "ENST_AUTO1E1"; gene_biotype "protein_coding";
+1	mini	exon	1600	2000	.	+	.	gene_id "ENSG_AUTO1"; gene_version "1"; gene_name "AUTO1"; transcript_id "ENST_AUTO1"; exon_number "2"; exon_id "ENST_AUTO1E2"; gene_biotype "protein_coding";
+1	mini	gene	99000	200000	.	-	.	gene_id "ENSG_OOR"; gene_version "1"; gene_name "OVERRUN"; gene_source "mini"; gene_biotype "protein_coding";
+1	mini	transcript	99000	200000	.	-	.	gene_id "ENSG_OOR"; gene_version "1"; gene_name "OVERRUN"; transcript_id "ENST_OOR"; transcript_version "1"; gene_source "mini"; gene_biotype "protein_coding";
+1	mini	exon	99000	99500	.	-	.	gene_id "ENSG_OOR"; gene_version "1"; gene_name "OVERRUN"; transcript_id "ENST_OOR"; exon_number "1"; exon_id "ENST_OORE1"; gene_biotype "protein_coding";
+1	mini	exon	150000	200000	.	-	.	gene_id "ENSG_OOR"; gene_version "1"; gene_name "OVERRUN"; transcript_id "ENST_OOR"; exon_number "2"; exon_id "ENST_OORE2"; gene_biotype "protein_coding";
+1	mini	gene	50000	51000	.	+	.	gene_id "ENSG_AUTO2"; gene_version "1"; gene_name "AUTO2"; gene_source "mini"; gene_biotype "protein_coding";
+1	mini	transcript	50000	51000	.	+	.	gene_id "ENSG_AUTO2"; gene_version "1"; gene_name "AUTO2"; transcript_id "ENST_AUTO1"; transcript_version "1"; gene_source "mini"; gene_biotype "protein_coding";
+1	mini	exon	50000	50400	.	+	.	gene_id "ENSG_AUTO2"; gene_version "1"; gene_name "AUTO2"; transcript_id "ENST_AUTO1"; exon_number "1"; exon_id "ENST_AUTO1E1"; gene_biotype "protein_coding";
+1	mini	exon	50600	51000	.	+	.	gene_id "ENSG_AUTO2"; gene_version "1"; gene_name "AUTO2"; transcript_id "ENST_AUTO1"; exon_number "2"; exon_id "ENST_AUTO1E2"; gene_biotype "protein_coding";
+X	mini	gene	100000	120000	.	+	.	gene_id "ENSG_SHARED"; gene_version "1"; gene_name "SHARED"; gene_source "mini"; gene_biotype "protein_coding";
+X	mini	transcript	100000	120000	.	+	.	gene_id "ENSG_SHARED"; gene_version "1"; gene_name "SHARED"; transcript_id "ENST_SHARED"; transcript_version "1"; gene_source "mini"; gene_biotype "protein_coding";
+X	mini	exon	100000	100500	.	+	.	gene_id "ENSG_SHARED"; gene_version "1"; gene_name "SHARED"; transcript_id "ENST_SHARED"; exon_number "1"; exon_id "ENST_SHAREDE1"; gene_biotype "protein_coding";
+X	mini	exon	119000	120000	.	+	.	gene_id "ENSG_SHARED"; gene_version "1"; gene_name "SHARED"; transcript_id "ENST_SHARED"; exon_number "2"; exon_id "ENST_SHAREDE2"; gene_biotype "protein_coding";
+Y	mini	gene	100000	120000	.	+	.	gene_id "ENSG_SHARED"; gene_version "1"; gene_name "SHARED"; gene_source "mini"; gene_biotype "protein_coding";
+Y	mini	transcript	100000	120000	.	+	.	gene_id "ENSG_SHARED"; gene_version "1"; gene_name "SHARED"; transcript_id "ENST_SHARED"; transcript_version "1"; gene_source "mini"; gene_biotype "protein_coding";
+Y	mini	exon	100000	100500	.	+	.	gene_id "ENSG_SHARED"; gene_version "1"; gene_name "SHARED"; transcript_id "ENST_SHARED"; exon_number "1"; exon_id "ENST_SHAREDE1"; gene_biotype "protein_coding";
+Y	mini	exon	119000	120000	.	+	.	gene_id "ENSG_SHARED"; gene_version "1"; gene_name "SHARED"; transcript_id "ENST_SHARED"; exon_number "2"; exon_id "ENST_SHAREDE2"; gene_biotype "protein_coding";
+Y	mini	gene	200000	210000	.	-	.	gene_id "ENSG_NONAME"; gene_version "1"; gene_source "mini"; gene_biotype "lncRNA";
+Y	mini	transcript	200000	210000	.	-	.	gene_id "ENSG_NONAME"; gene_version "1"; transcript_id "ENST_NONAME"; transcript_version "1"; gene_source "mini"; gene_biotype "lncRNA";
+Y	mini	exon	200000	200300	.	-	.	gene_id "ENSG_NONAME"; gene_version "1"; transcript_id "ENST_NONAME"; exon_number "1"; exon_id "ENST_NONAMEE1"; gene_biotype "lncRNA";
+Y	mini	exon	209000	210000	.	-	.	gene_id "ENSG_NONAME"; gene_version "1"; transcript_id "ENST_NONAME"; exon_number "2"; exon_id "ENST_NONAMEE2"; gene_biotype "lncRNA";
+Y	mini	gene	2780000	2790000	.	+	.	gene_id "ENSG_PAB"; gene_version "1"; gene_name "PABGENE"; gene_source "mini"; gene_biotype "protein_coding";
+Y	mini	transcript	2780000	2790000	.	+	.	gene_id "ENSG_PAB"; gene_version "1"; gene_name "PABGENE"; transcript_id "ENST_PAB"; transcript_version "1"; gene_source "mini"; gene_biotype "protein_coding";
+Y	mini	exon	2780000	2782000	.	+	.	gene_id "ENSG_PAB"; gene_version "1"; gene_name "PABGENE"; transcript_id "ENST_PAB"; exon_number "1"; exon_id "ENST_PABE1"; gene_biotype "protein_coding";
+Y	mini	exon	2788000	2790000	.	+	.	gene_id "ENSG_PAB"; gene_version "1"; gene_name "PABGENE"; transcript_id "ENST_PAB"; exon_number "2"; exon_id "ENST_PABE2"; gene_biotype "protein_coding";
+Y	mini	gene	2800000	2820000	.	-	.	gene_id "ENSG_NPY1"; gene_version "1"; gene_name "NPY1"; gene_source "mini"; gene_biotype "protein_coding"; ref_gene_id "ENSG_DECOY";
+Y	mini	transcript	2800000	2820000	.	-	.	gene_id "ENSG_NPY1"; gene_version "1"; gene_name "NPY1"; transcript_id "ENST_NPY1"; transcript_version "1"; gene_source "mini"; gene_biotype "protein_coding"; ref_gene_id "ENSG_DECOY";
+Y	mini	exon	2800000	2800800	.	-	.	gene_id "ENSG_NPY1"; gene_version "1"; gene_name "NPY1"; transcript_id "ENST_NPY1"; exon_number "1"; exon_id "ENST_NPY1E1"; gene_biotype "protein_coding"; ref_gene_id "ENSG_DECOY";
+Y	mini	exon	2819000	2820000	.	-	.	gene_id "ENSG_NPY1"; gene_version "1"; gene_name "NPY1"; transcript_id "ENST_NPY1"; exon_number "2"; exon_id "ENST_NPY1E2"; gene_biotype "protein_coding"; ref_gene_id "ENSG_DECOY";
+Y	mini	gene	2910000	2930000	.	+	.	gene_id "ENSG_PAR2G"; gene_version "1"; gene_name "PAR2GENE"; gene_source "mini"; gene_biotype "protein_coding";
+Y	mini	transcript	2910000	2930000	.	+	.	gene_id "ENSG_PAR2G"; gene_version "1"; gene_name "PAR2GENE"; transcript_id "ENST_PAR2G"; transcript_version "1"; gene_source "mini"; gene_biotype "protein_coding";
+Y	mini	exon	2910000	2910600	.	+	.	gene_id "ENSG_PAR2G"; gene_version "1"; gene_name "PAR2GENE"; transcript_id "ENST_PAR2G"; exon_number "1"; exon_id "ENST_PAR2GE1"; gene_biotype "protein_coding";
+Y	mini	exon	2929000	2930000	.	+	.	gene_id "ENSG_PAR2G"; gene_version "1"; gene_name "PAR2GENE"; transcript_id "ENST_PAR2G"; exon_number "2"; exon_id "ENST_PAR2GE2"; gene_biotype "protein_coding";
+HSCHR1_1_CTG3	mini	gene	1000	2000	.	+	.	gene_id "ENSG_PATCHG"; gene_version "1"; gene_name "PATCHGENE"; gene_source "mini"; gene_biotype "protein_coding";
+HSCHR1_1_CTG3	mini	transcript	1000	2000	.	+	.	gene_id "ENSG_PATCHG"; gene_version "1"; gene_name "PATCHGENE"; transcript_id "ENST_PATCHG"; transcript_version "1"; gene_source "mini"; gene_biotype "protein_coding";
+HSCHR1_1_CTG3	mini	exon	1000	1400	.	+	.	gene_id "ENSG_PATCHG"; gene_version "1"; gene_name "PATCHGENE"; transcript_id "ENST_PATCHG"; exon_number "1"; exon_id "ENST_PATCHGE1"; gene_biotype "protein_coding";
+HSCHR1_1_CTG3	mini	exon	1600	2000	.	+	.	gene_id "ENSG_PATCHG"; gene_version "1"; gene_name "PATCHGENE"; transcript_id "ENST_PATCHG"; exon_number "2"; exon_id "ENST_PATCHGE2"; gene_biotype "protein_coding";
